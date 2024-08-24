@@ -11,6 +11,11 @@ class LinkedList{
 public:
     LinkedList() : Head(NULL) {}
 
+    // getter since Head is private
+    Node* getHead() {
+        return Head;
+    }
+
     void insertAtFirst(int value) {
         Node* newNode = new Node();
 
@@ -76,11 +81,61 @@ public:
 
     }
     
-    void len() {
+    // len with iteration
+    int len() {
+        if(!Head){
+            return 0;
+        }
+
         Node* temp = Head;
 
+        int len = 0;
+        while(temp) {
+            temp = temp->Next;
+            len++;
+        }
+
+        return len;
     }
 
+    // len with recursive
+    int lenRecursively(Node* temp) {
+        if(!temp){
+            return 0;
+        }
+
+        return 1 + lenRecursively(temp->Next);
+    }
+
+    bool find(int value) {
+        if(!Head){
+            return false;
+        }
+
+        Node* temp = Head;
+
+        while(temp) {
+            temp = temp->Next;
+            if(temp->Data == value) {
+                return true;
+            }
+        }
+
+        return false;
+    } 
+
+    bool findRecursively(int value, Node* temp) {
+        // if temp is null then there's nothing, so false
+        if(!temp) {
+            return false;
+        }
+        
+        if(temp->Data == value) { // if it matches, then true
+            return true;
+        } else {
+            return findRecursively(value, temp->Next); // if it is not, then do it again, until !temp is null until it meets the condition on the top
+        }
+    }
     void print() {
         if(!Head) {
             std::cout << "no head for u lil bro";
@@ -102,9 +157,32 @@ int main() {
     list.insertAtFirst(3);
     list.insertAtFirst(2);
     list.insertAtFirst(1);
-    list.insertAtPosition(3, 69);
-    list.deleteAtLast();
     list.print();
+
+    std::cout << std::endl;
+
+    std::cout << "len : " << list.len();
+    std::cout << std::endl;
+
+    Node* head = list.getHead();
+    std::cout << "len recursively : " << list.lenRecursively(head);
+    std::cout << std::endl;
+
+    bool isExist = list.find(5);
+    if(isExist) {
+        std::cout << "he(5) is HIM";
+    } else {
+        std::cout << "unfortunately, he's not";
+    }
+    std::cout << std::endl;
+
+    isExist = list.findRecursively(6, head);
+    if(isExist) {
+        std::cout << "he(6) is HIM";
+    } else {
+        std::cout << "unfortunately, he's not";
+    }
+    std::cout << std::endl;
 
     return 0;
 }
