@@ -80,6 +80,23 @@ public:
         temp->Next = NULL;
 
     }
+
+    void deleteAtPosition(int position) {
+        if(!Head) {
+            std::cout << "no head for u lil bro";
+        }
+
+        Node* temp = Head;
+        if(position == 1) {
+            Head = temp->Next;
+        }
+
+        for(int i = 1; i < position-1 && temp; i++) { // what if it does not founda anything lol
+            temp = temp->Next;
+        }
+
+        temp->Next =  temp->Next->Next;
+    }
     
     // len with iteration
     int len() {
@@ -91,8 +108,8 @@ public:
 
         int len = 0;
         while(temp) {
-            temp = temp->Next;
             len++;
+            temp = temp->Next;
         }
 
         return len;
@@ -136,6 +153,22 @@ public:
             return findRecursively(value, temp->Next); // if it is not, then do it again, until !temp is null until it meets the condition on the top
         }
     }
+
+    Node* reverse() {
+        Node* prev = new Node();
+        Node* curr = Head;;
+        Node* next = new Node();
+
+        while(curr != nullptr){
+            next = curr->Next;
+            curr->Next = prev;
+            prev = curr;
+            curr=next;
+        }
+
+        return prev;
+    }
+
     void print() {
         if(!Head) {
             std::cout << "no head for u lil bro";
@@ -147,17 +180,44 @@ public:
             temp = temp->Next;
         }
     }
+
+    void printWithHead(Node* head) {
+        if(!head) {
+            std::cout << "no head for u lil bro";
+        }
+        Node* temp = head;
+
+        while(temp) {
+            std::cout << temp->Data << " -> ";
+            temp = temp->Next;
+        }
+    }
 };
 
 int main() {
     LinkedList list;
 
+    std::cout << "initialization..." << std::endl;
     list.insertAtFirst(5);
     list.insertAtFirst(4);
     list.insertAtFirst(3);
     list.insertAtFirst(2);
     list.insertAtFirst(1);
+    list.insertAtFirst(1);
+    list.insertAtFirst(1);
+    list.insertAtFirst(1);
+    std::cout << "list before reversion :" << std::endl;
+    std::cout << "ini print" << std::endl;
     list.print();
+    
+    std::cout << std::endl;
+    /*
+
+    std::cout << "list after reversion :" << std::endl;
+    Node* prev = new Node();
+    prev = list.reverse();
+    list.printWithHead(prev);
+    */
 
     std::cout << std::endl;
 
@@ -168,19 +228,21 @@ int main() {
     std::cout << "len recursively : " << list.lenRecursively(head);
     std::cout << std::endl;
 
-    bool isExist = list.find(5);
+    int findmeubastard = 5;
+    int whereami = 6;
+    bool isExist = list.find(findmeubastard);
     if(isExist) {
-        std::cout << "he(5) is HIM";
+        std::cout << "he(" << findmeubastard << ") is HIM";
     } else {
-        std::cout << "unfortunately, he's not";
+        std::cout << "unfortunately, he's(" << findmeubastard << ") not";
     }
     std::cout << std::endl;
 
-    isExist = list.findRecursively(6, head);
+    isExist = list.findRecursively(whereami, head);
     if(isExist) {
-        std::cout << "he(6) is HIM";
+        std::cout << "he(" << whereami << ") is HIM";
     } else {
-        std::cout << "unfortunately, he's not";
+        std::cout << "unfortunately, he's(" << whereami << ") not";
     }
     std::cout << std::endl;
 
