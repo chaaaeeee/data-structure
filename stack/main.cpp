@@ -23,9 +23,9 @@ public:
         if(!IsFull()) {
             top++;
             arr[top] = element;
-            std::cout << "Pushed " << element << " into the Stack..." << std::endl;
+            std::cout << "pushed " << element << " into the stack..." << std::endl;
         } else {
-            std::cout << "Stack is full, can't push the element..." << std::endl;
+            std::cout << "stack is full, can't push the element..." << std::endl;
         }
     } 
 
@@ -33,9 +33,9 @@ public:
         if(!IsEmpty()) {
             char popped = arr[top];
             top--;
-            std::cout << "Popped last element of the Stack : " << popped << std::endl;
-        } {
-            std::cout << "Stack is empty, can't find the last element of the Stack" << std::endl;
+            std::cout << "popped last element of the stack : " << popped << std::endl;
+        } else {
+            std::cout << "stack is empty, can't find the last element of the stack" << std::endl;
         }
     }
 
@@ -50,24 +50,15 @@ public:
         }
     }
 
-
-    void Reverse() { // cout right away, should be printReversed
-        char popped;
-        while(!IsEmpty()){
-            popped = arr[top];
-            std::cout << popped;
-            PopWithoutMsg();
-        }
-    }
-
-    void ReverseAgain() { // actual reverse, bcs it's pushed back into the Stack
+    void Reverse() { // actual reverse, bcs it's pushed back into the Stack
+        std::cout << "reversing the stack..." << std::endl;
         char popped;
         int index = 0;
         char reversed[MAX_SIZE] = {};
         while(!IsEmpty()) {
             reversed[index] = arr[top];
             index++;
-            PopWithoutMsg();
+            Pop();
             // need variabels to store popped that's accessible outside the loop
         }
 
@@ -82,6 +73,15 @@ public:
             std::cout << arr[i]; 
         }
     }
+
+    void PrintReversed() { // cout right away, should be printReversed
+        char popped;
+        while(!IsEmpty()){
+            popped = arr[top];
+            std::cout << popped;
+            Pop();
+        }
+    }
 };
 
 int main() {
@@ -89,9 +89,17 @@ int main() {
     stk.Push('b');
     stk.Push('a');
     stk.Push('d');
-
-    stk.ReverseAgain();
+    std::cout << "stack : ";
     stk.Print();
+
+    std::cout << std::endl;
+
+    stk.Reverse();
+
+    std::cout << "stack : ";
+    stk.Print();
+
+    std::cout << std::endl;
 
     return 0;
 }
